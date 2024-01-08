@@ -1,0 +1,78 @@
+package com.infotrixs.task1;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Iterator;
+
+public class FavoriteCurrency {
+
+	private ArrayList<String> aob = new ArrayList<String>();
+	
+	BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+
+	public void addFavorite() throws IOException {
+
+		
+		System.out.print("Add favorite Currency: ");
+		String addFav = br.readLine().toUpperCase();
+		
+		if (!aob.contains(addFav)) {
+			
+			aob.add(addFav);
+			System.out.println("\nSuccessfully Added..!!!");
+
+		} else {
+			System.out.println("\nCurrency already in favorites. Not added.");
+
+		}
+
+		
+	}
+
+	public void viewFavorite() {
+		
+		if (aob.contains(null)) {
+			
+			System.out.println("No Currencies added..!!");
+		} 
+		else {
+			
+			Iterator<String> ir = aob.iterator();
+
+			System.out.print("Favorite Currency List: ");
+			while (ir.hasNext()) {
+
+				System.out.print(ir.next() + ", ");
+			}
+			System.out.println();
+		}
+				
+	}
+	
+	public void updateFavorite() throws  IOException {
+		
+		viewFavorite();
+		
+		System.out.print("\nEnter Currency Code to remove: ");
+		String toRemove = br.readLine().toUpperCase();
+		
+		
+		if(aob.contains(toRemove)) {
+			
+			aob.remove(toRemove);
+			System.out.println("Successfully Removed..!!!");
+		}
+		else {
+			System.out.println("No such Country code exists");
+		}
+		
+		viewFavorite();
+
+			
+		
+	}
+
+}

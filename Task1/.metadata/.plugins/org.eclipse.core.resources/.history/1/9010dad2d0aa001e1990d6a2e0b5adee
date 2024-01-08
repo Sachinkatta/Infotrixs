@@ -1,0 +1,23 @@
+package com.infotrixs.task1;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+
+public class FavoriteCurrency {
+	
+	public static void addFavourite() throws IOException {
+		
+		ArrayList<String> aob = new ArrayList<String>();
+		
+		BufferedReader br = new BufferedReader(new InputStreamReader (System.in));
+		
+		System.out.print("Add favorite Currency: ");
+		String addFav = br.readLine();
+		
+		aob.add(addFav);
+		
+	}
+
+}

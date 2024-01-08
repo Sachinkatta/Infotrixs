@@ -1,0 +1,124 @@
+package com.infotrixs.task1;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Scanner;
+import java.util.Set;
+
+import org.json.JSONObject;
+
+public class FavoriteCurrency {
+
+	private HashMap<String, Double> exchangeRates;
+	private HashMap<String, Double> currencyList;
+
+	BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+	public FavoriteCurrency() {
+		exchangeRates = new HashMap<>();
+		currencyList = new HashMap<>();
+	}
+
+	public void loadExchangeRates() {
+		String apiKey = "a1beb9adb298879fadd88767094fa89c";
+		String urlLink = "http://api.exchangerate.host/live?access_key=";
+
+		try {
+			URL url = new URL(urlLink + apiKey);
+			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+			connection.setRequestMethod("GET");
+			connection.connect();
+
+			if (connection.getResponseCode() != 200) {
+				throw new RuntimeException("Error" + connection.getResponseCode());
+			} else {
+				String input = "";
+				Scanner sc = new Scanner(url.openStream());
+
+				while (sc.hasNext()) {
+					input += sc.nextLine();
+				}
+
+				JSONObject object = new JSONObject(input).getJSONObject("quotes");
+				Set<String> keys = object.keySet();
+
+				for (String s : keys) {
+					exchangeRates.put(s, object.getDouble(s));
+				}
+
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	public void addFavorite() throws IOException {
+
+		loadExchangeRates();
+
+		System.out.print("Add favorite Currency: ");
+		String addFav = br.readLine().toUpperCase();
+
+		if (exchangeRates.containsKey(addFav)) {
+
+			if (!currencyList.containsKey(addFav)) {
+
+				currencyList.put(addFav, exchangeRates.get(addFav));
+				System.out.println("\nSuccessfully Added..!!!");
+			} else {
+				System.out.println("\nCurrency already in favorites. Not added.");
+			}
+		} else {
+			System.out.println("\nInvalid currency code. Please enter a valid code.");
+		}
+
+	}
+
+	public void viewFavorite() {
+		
+		System.out.println("======Favorite Currencies=====");
+
+		if (currencyList.isEmpty()) {
+
+			System.out.println("No Currencies added..!!");
+		} else {
+
+			for (Map.Entry<String, Double> k : currencyList.entrySet()) {
+
+				System.out.println(k.getKey() + " : " + k.getValue());
+			}
+		}
+
+	}
+
+	public void updateFavorite() throws IOException {
+		
+		System.out.println("======Update Currencies=====");
+
+
+		System.out.print("\nEnter Currency Code: ");
+		String toUpdate = br.readLine().toUpperCase();
+
+		System.out.println("Enter the new Rate : ");
+		double rate = Double.parseDouble(br.readLine());
+
+		if (currencyList.containsKey(toUpdate)) {
+
+			currencyList.replace(toUpdate, rate);
+			System.out.println("Successfully Updated..!!!");
+		} else {
+
+			System.out.println("No such Country code exists");
+		}
+
+	}
+
+}

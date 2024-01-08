@@ -1,0 +1,171 @@
+
+
+package com.infotrixs.task1;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
+
+public class Main {
+    private Map<String, Double> exchangeRates;
+    private Map<String, Double> favoriteCurrencies;
+
+    public Main() {
+        this.exchangeRates = new HashMap<>();
+        this.favoriteCurrencies = new HashMap<>();
+        updateExchangeRates();
+    }
+
+    private void updateExchangeRates() {
+        ApiClass.convert();
+        // Extract exchange rates from API response and update the exchangeRates map
+        // You may modify ApiClass.convert() to return the exchange rates or update the map here
+    }
+
+    public void addFavoriteCurrency(String currencyCode) {
+        if (exchangeRates.containsKey(currencyCode)) {
+            favoriteCurrencies.put(currencyCode, exchangeRates.get(currencyCode));
+            System.out.println(currencyCode + " added to favorites.");
+        } else {
+            System.out.println("Invalid currency code.");
+        }
+    }
+
+    public void viewFavoriteCurrencies() {
+        if (favoriteCurrencies.isEmpty()) {
+            System.out.println("No favorite currencies added yet.");
+        } else {
+            System.out.println("Favorite Currencies:");
+            for (Map.Entry<String, Double> entry : favoriteCurrencies.entrySet()) {
+                System.out.println(entry.getKey() + ": " + entry.getValue());
+            }
+        }
+    }
+
+    public void updateFavoriteCurrency(String currencyCode, double newRate) {
+        if (favoriteCurrencies.containsKey(currencyCode)) {
+            favoriteCurrencies.put(currencyCode, newRate);
+            System.out.println(currencyCode + " updated in favorites.");
+        } else {
+            System.out.println("Currency not found in favorites.");
+        }
+    }
+
+    public static void main(String[] args) {
+        Main converter = new Main();
+        Scanner scanner = new Scanner(System.in);
+
+        while (true) {
+            System.out.println("\nOptions:");
+            System.out.println("1. Add favorite currency");
+            System.out.println("2. View favorite currencies");
+            System.out.println("3. Update favorite currency rate");
+            System.out.println("4. Exit");
+            System.out.print("Enter your choice: ");
+
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // Consume the newline character
+
+            switch (choice) {
+                case 1:
+                    System.out.print("Enter currency code to add to favorites: ");
+                    String addCurrency = scanner.nextLine().toUpperCase();
+                    converter.addFavoriteCurrency(addCurrency);
+                    break;
+                case 2:
+                    converter.viewFavoriteCurrencies();
+                    break;
+                case 3:
+                    System.out.print("Enter currency code to update: ");
+                    String updateCurrency = scanner.nextLine().toUpperCase();
+                    System.out.print("Enter new exchange rate: ");
+                    double newRate = scanner.nextDouble();
+                    converter.updateFavoriteCurrency(updateCurrency, newRate);
+                    break;
+                case 4:
+                    System.out.println("Exiting program. Goodbye!");
+                    System.exit(0);
+                default:
+                    System.out.println("Invalid choice. Please enter a valid option.");
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+//package com.infotrixs.task1;
+//
+//import java.io.BufferedReader;
+//import java.io.IOException;
+//import java.io.InputStreamReader;
+//
+//public class Main {
+//
+//	public static void main(String[] args) throws IOException {
+//
+//		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+//		
+//		FavoriteCurrency ob = new FavoriteCurrency ();
+//
+//		while (true) {
+//			
+//			System.out.println();
+//			System.out.println("========Curreny Converter==========");
+//			System.out.println("1.Add Favorite Currency");
+//			System.out.println("2.View Favorite Currencies");
+//			System.out.println("3.Show Real-Time Currency Conversion");
+//			System.out.println("4.Update/Remove Currencies");
+//			System.out.println("5.EXIT");
+//			System.out.println("====================================");
+//			System.out.println();
+//
+//
+//			System.out.println("Enter your choice");
+//			String choice = br.readLine();
+//
+//			switch (choice) {
+//
+//			case "1":
+//					
+//					//ob.addFavorite();
+//					break;
+//
+//			case "2":	
+//					
+//					//ob.viewFavorite();
+//					break;
+//
+//			case "3":
+//					
+//	
+//					ApiClass.convert();
+//					break;
+//
+//			case "4": 
+//			//		ob.updateFavorite();
+//					break;
+//					
+//			case "5": 
+//					System.out.println("Existing...Bye");
+//					System.exit(0);
+//					break;
+//					
+//			default:
+//					System.out.println("Invalid input, TRY AGAIN..!!");
+//
+//			}
+//		}
+//
+//	}
+//
+//}

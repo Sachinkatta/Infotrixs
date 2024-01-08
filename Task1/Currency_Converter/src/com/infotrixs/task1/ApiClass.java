@@ -1,0 +1,50 @@
+package com.infotrixs.task1;
+
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
+import java.util.Set;
+
+import org.json.JSONObject;
+
+public class ApiClass {
+	
+	 
+	    public static void convert(String from, String to, double amount) {
+
+		String apiKey = "a1beb9adb298879fadd88767094fa89c";
+		String urlLink = "http://api.exchangerate.host/convert?access_key="+apiKey+"&from="+from+"&to="+to+"&amount="+amount;
+
+		try {
+			URL url = new URL(urlLink);
+			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+			connection.setRequestMethod("GET");
+			connection.connect();
+
+			if (connection.getResponseCode() != 200) {
+				throw new RuntimeException("Error" + connection.getResponseCode());
+			} else {
+				String input = "";
+				Scanner sc = new Scanner(url.openStream());
+
+				while (sc.hasNext()) {
+					input += sc.nextLine();
+				}
+
+				JSONObject object = new JSONObject(input);
+				Double result = object.getDouble("result");
+	
+				
+				System.out.println(amount + " " + from + " = " + result + " " + to);				
+				
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
+}

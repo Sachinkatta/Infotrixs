@@ -1,0 +1,29 @@
+package com.infotrixs.task1;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
+
+public class FavoriteCurrency {
+
+	private static Map<String, Double> favoriteCurrencies = new HashMap<>();
+
+	Scanner sc = new Scanner(System.in);
+
+	public void addFavorite() throws IOException {
+		System.out.print("Enter the currency code (e.g., USD): ");
+		String currencyCode = sc.next().toUpperCase();
+		
+		
+		// Fetch exchange rate using API (you need to implement this)
+		double exchangeRate = getExchangeRate(currencyCode);
+
+		favoriteCurrencies.put(currencyCode, exchangeRate);
+		System.out.println(currencyCode + " added to favorites with exchange rate: " + exchangeRate);
+
+	}
+
+	
+
+}

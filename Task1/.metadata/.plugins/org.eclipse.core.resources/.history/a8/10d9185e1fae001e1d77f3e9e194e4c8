@@ -1,0 +1,53 @@
+package com.infotrixs.task1;
+
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.Scanner;
+
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+
+public class ApiClass {
+	
+public static void convert(String from, String to, double amount) {
+		
+		String apiKey = "a1beb9adb298879fadd88767094fa89c";
+		String urlLink = "http://api.exchangerate.host/live?access_key=";
+		
+		try {
+			URL url = new URL(urlLink + apiKey);
+			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+			connection.setRequestMethod("GET");
+			connection.connect();
+			
+			if(connection.getResponseCode()!=200)
+			{
+				throw new RuntimeException("Error" + connection.getResponseCode());
+			}
+			else {
+				String input ="";
+				Scanner sc = new Scanner(url.openStream());
+				
+				while(sc.hasNext())
+				{
+					input+= sc.nextLine();
+				}
+				
+				JSONObject object = (JSONObject) new JSONParser().parse(input);
+				
+				
+				String data =(String)object.get("quotes");
+				System.out.println(data);
+
+				
+				System.out.println();
+			}
+			
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+
+}

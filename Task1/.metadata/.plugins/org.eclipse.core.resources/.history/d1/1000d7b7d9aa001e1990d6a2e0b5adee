@@ -1,0 +1,46 @@
+package com.infotrixs.task1;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Iterator;
+
+public class FavoriteCurrency {
+
+	private ArrayList<String> aob = new ArrayList<String>();
+
+	public void addFavorite() throws IOException {
+
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+		System.out.print("Add favorite Currency: ");
+		String addFav = br.readLine().toUpperCase();
+		
+		if (!aob.contains(addFav)) {
+			
+			aob.add(addFav);
+			System.out.println("\nSuccessfully Added..!!!");
+
+		} else {
+			System.out.println("\nCurrency already in favorites. Not added.");
+
+		}
+
+		
+	}
+
+	public void viewFavorite() {
+		
+		Iterator<String> ir = aob.iterator();
+		
+		System.out.print("Favorite Currency List: ");
+		while(ir.hasNext()) {
+			
+			System.out.print(ir.next()+", ");
+		}
+		System.out.println();
+				
+	}
+
+}

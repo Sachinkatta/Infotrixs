@@ -1,0 +1,70 @@
+package com.infotrixs.task1;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class Main {
+
+	public static void main(String[] args) throws IOException {
+
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		
+		FavoriteCurrency ob = new FavoriteCurrency ();
+
+		while (true) {
+			
+			System.out.println();
+			System.out.println("========Curreny Converter==========");
+			System.out.println("1.Add Favorite Currency");
+			System.out.println("2.View Favorite Currencies");
+			System.out.println("3.Show Real-Time Currency Conversion");
+			System.out.println("4.Update/Remove Currencies");
+			System.out.println("5.EXIT");
+			System.out.println("====================================");
+			System.out.println();
+
+
+			System.out.println("Enter your choice");
+			String choice = br.readLine();
+
+			switch (choice) {
+
+			case "1":
+					
+					ob.addFavorite();
+					break;
+
+			case "2":	
+					
+					ob.viewFavorite();
+					break;
+
+			case "3":
+					System.out.print("Currency from : ");
+					String from = br.readLine().toUpperCase();
+	
+					System.out.print("to : ");
+					String to = br.readLine().toUpperCase();
+	
+					System.out.print("Enter Amount : ");
+					double amount = Double.parseDouble(br.readLine());
+	
+					ApiClass.convert(from, to, amount);
+					break;
+
+			case "4": ob.updateFavorite();
+					break;
+					
+			case "5": System.exit(0);
+					break;
+					
+			default:
+					System.out.println("Invalid input, TRY AGAIN..!!");
+
+			}
+		}
+
+	}
+
+}
